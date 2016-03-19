@@ -8,16 +8,30 @@ Use unitypackage under Distribution
 
 ## Usage
 
-1 Add uses-permission at AndroidManifest
+1 Add uses-permission to AndroidManifest
 
 ```
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
 ```
 
-2 Add UniAndroidPermission.prefab at boot scene  ※ Don't rename object name!!
+2 Add Custom Activity and SkipPermissionsDialog to Android Manifest
+
+```
+<activity android:name="jp.ne.donuts.uniandroidpermission.OverrideUnityActivity"
+         android:label="@string/app_name"
+         android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen">
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+</activity>
+<meta-data android:name="unityplayer.SkipPermissionsDialog" android:value="true" />
+```
+
+3 Add UniAndroidPermission.prefab at boot scene  ※ Don't rename object name!!
 
 
-3 Call method before function which need permissions
+4 Call method before function which need permissions
 
 Check if permission permitted.
 
