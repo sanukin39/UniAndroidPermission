@@ -7,6 +7,7 @@ public class UniAndroidPermission : MonoBehaviour {
 
     private static Action permitCallBack;
     private static Action notPermitCallBack;
+    AndroidJavaClass permissionManager;
 
     void Awake(){
         DontDestroyOnLoad (gameObject);
@@ -17,8 +18,8 @@ public class UniAndroidPermission : MonoBehaviour {
         Debug.LogWarning("UniAndroidPermission works only Androud Devices.");
         return true;
 #endif
-        AndroidJavaClass permissionManager = new AndroidJavaClass ("jp.ne.donuts.permissiongetter.PermissionGetter");
-        return permissionManager.CallStatic<bool> ("hasPermission", GetCurrentActivity(), GetPermittionStr(permission));
+        AndroidJavaClass permissionManager = new AndroidJavaClass ("jp.ne.donuts.uniandroidpermission.PermissionManager");
+        return permissionManager.CallStatic<bool> ("hasPermission", GetPermittionStr(permission));
     }
 
     public static void RequestPremission(AndroidPermission permission, Action onPermit = null, Action notPermit = null){
@@ -26,14 +27,10 @@ public class UniAndroidPermission : MonoBehaviour {
         Debug.LogWarning("UniAndroidPermission works only Androud Devices.");
         return;
 #endif
-        AndroidJavaClass permissionManager = new AndroidJavaClass ("jp.ne.donuts.permissiongetter.PermissionGetter");
-        permissionManager.CallStatic("requestPermission", GetCurrentActivity(), GetPermittionStr(permission));
+        AndroidJavaClass permissionManager = new AndroidJavaClass ("jp.ne.donuts.uniandroidpermission.PermissionManager");
+        permissionManager.CallStatic("requestPermission", GetPermittionStr(permission));
         permitCallBack = onPermit;
         notPermitCallBack = notPermit;
-    }
-
-    private static AndroidJavaObject GetCurrentActivity(){
-        return new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
     }
 
     private static string GetPermittionStr(AndroidPermission permittion){
