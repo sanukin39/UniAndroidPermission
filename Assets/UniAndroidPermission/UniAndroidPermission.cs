@@ -7,6 +7,7 @@ public class UniAndroidPermission : MonoBehaviour {
 
     private static Action permitCallBack;
     private static Action notPermitCallBack;
+    const string PackageClassName = "jp.ne.donuts.uniandroidpermission.PermissionManager";
     AndroidJavaClass permissionManager;
 
     void Awake(){
@@ -17,20 +18,23 @@ public class UniAndroidPermission : MonoBehaviour {
 #if UNITY_EDITOR
         Debug.LogWarning("UniAndroidPermission works only Androud Devices.");
         return true;
-#endif
-        AndroidJavaClass permissionManager = new AndroidJavaClass ("jp.ne.donuts.uniandroidpermission.PermissionManager");
+#elif UNITY_ANDROID
+        AndroidJavaClass permissionManager = new AndroidJavaClass (PackageClassName);
         return permissionManager.CallStatic<bool> ("hasPermission", GetPermittionStr(permission));
+#endif
+        return true;
     }
 
     public static void RequestPremission(AndroidPermission permission, Action onPermit = null, Action notPermit = null){
 #if UNITY_EDITOR
         Debug.LogWarning("UniAndroidPermission works only Androud Devices.");
         return;
-#endif
-        AndroidJavaClass permissionManager = new AndroidJavaClass ("jp.ne.donuts.uniandroidpermission.PermissionManager");
+#elif UNITY_ANDROID
+        AndroidJavaClass permissionManager = new AndroidJavaClass (PackageClassName);
         permissionManager.CallStatic("requestPermission", GetPermittionStr(permission));
         permitCallBack = onPermit;
         notPermitCallBack = notPermit;
+#endif
     }
 
     private static string GetPermittionStr(AndroidPermission permittion){
