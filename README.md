@@ -17,7 +17,7 @@ Use unitypackage under Distribution
 2 Add Custom Activity and SkipPermissionsDialog to Android Manifest
 
 ```
-<activity android:name="jp.ne.donuts.uniandroidpermission.OverrideUnityActivity"
+<activity android:name=“net.sanukin.OverrideUnityActivity"
          android:label="@string/app_name"
          android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen">
     <intent-filter>

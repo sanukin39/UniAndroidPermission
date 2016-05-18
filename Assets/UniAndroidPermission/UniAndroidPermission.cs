@@ -7,7 +7,7 @@ public class UniAndroidPermission : MonoBehaviour {
 
     private static Action permitCallBack;
     private static Action notPermitCallBack;
-    const string PackageClassName = "jp.ne.donuts.uniandroidpermission.PermissionManager";
+    const string PackageClassName = "net.sanukin.PermissionManager";
     AndroidJavaClass permissionManager;
 
     void Awake(){
