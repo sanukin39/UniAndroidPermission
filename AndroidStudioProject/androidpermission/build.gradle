@@ -1,0 +1,11 @@
+apply plugin: 'java'
+
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile files('libs/classes.jar')
+    compile files('libs/android-support-v4.jar')
+    compile files('libs/android.jar')
+}
