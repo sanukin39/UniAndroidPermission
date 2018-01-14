@@ -25,7 +25,7 @@ public class UniAndroidPermission : MonoBehaviour {
         return true;
     }
 
-    public static void RequestPremission(AndroidPermission permission, Action onPermit = null, Action notPermit = null){
+    public static void RequestPermission(AndroidPermission permission, Action onPermit = null, Action notPermit = null){
 #if UNITY_EDITOR
         Debug.LogWarning("UniAndroidPermission works only Androud Devices.");
         return;

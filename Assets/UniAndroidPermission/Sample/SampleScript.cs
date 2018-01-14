@@ -12,7 +12,7 @@ public class SampleScript : MonoBehaviour {
             return;
         }
 
-        UniAndroidPermission.RequestPremission (AndroidPermission.WRITE_EXTERNAL_STORAGE, () => {
+        UniAndroidPermission.RequestPermission (AndroidPermission.WRITE_EXTERNAL_STORAGE, () => {
             text.text = "WRITE_EXTERNAL_STORAGE is permitted NOW!!";
         }, () => {
             text.text = "WRITE_EXTERNAL_STORAGE id NOT permitted...";
