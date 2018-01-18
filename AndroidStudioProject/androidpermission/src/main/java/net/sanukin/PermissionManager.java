@@ -3,7 +3,6 @@ package net.sanukin;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.util.Log;
 
 import com.unity3d.player.UnityPlayer;
 

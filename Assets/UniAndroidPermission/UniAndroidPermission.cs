@@ -7,6 +7,7 @@ public class UniAndroidPermission : MonoBehaviour {
 
     private static Action permitCallBack;
     private static Action notPermitCallBack;
+    private static Action notPermitAndNverAskAgainCallbak;
     const string PackageClassName = "net.sanukin.PermissionManager";
     AndroidJavaClass permissionManager;
 
@@ -25,7 +26,7 @@ public class UniAndroidPermission : MonoBehaviour {
         return true;
     }
 
-    public static void RequestPermission(AndroidPermission permission, Action onPermit = null, Action notPermit = null){
+    public static void RequestPermission(AndroidPermission permission, Action onPermit = null, Action notPermit = null, Action notPermitAndNeverAskAgain = null){
 #if UNITY_EDITOR
         Debug.LogWarning("UniAndroidPermission works only Androud Devices.");
         return;
@@ -34,6 +35,7 @@ public class UniAndroidPermission : MonoBehaviour {
         permissionManager.CallStatic("requestPermission", GetPermittionStr(permission));
         permitCallBack = onPermit;
         notPermitCallBack = notPermit;
+        notPermitAndNverAskAgainCallbak = notPermitAndNeverAskAgain;
 #endif
     }
 
@@ -41,23 +43,33 @@ public class UniAndroidPermission : MonoBehaviour {
         return "android.permission." + permittion.ToString ();
     }
 
-    private void OnPermit(){
+    private void OnAllow(){
         if (permitCallBack != null) {
             permitCallBack ();
         }
         ResetCallBacks ();
     }
 
-    private void NotPermit(){
+    private void OnDeny(){
         if (notPermitCallBack != null) {
             notPermitCallBack ();
         }
         ResetCallBacks ();
     }
 
+    private void OnDenyWithNeverAskAgainOption()
+    {
+        if (notPermitAndNverAskAgainCallbak != null)
+        {
+            notPermitAndNverAskAgainCallbak();
+        }
+        ResetCallBacks();
+    }
+
     private void ResetCallBacks(){
         notPermitCallBack = null;
         permitCallBack = null;
+        notPermitAndNverAskAgainCallbak = null;
     }
 }
 

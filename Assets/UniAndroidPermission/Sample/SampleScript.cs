@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class SampleScript : MonoBehaviour {
 
@@ -12,10 +11,20 @@ public class SampleScript : MonoBehaviour {
             return;
         }
 
-        UniAndroidPermission.RequestPermission (AndroidPermission.WRITE_EXTERNAL_STORAGE, () => {
+        UniAndroidPermission.RequestPermission (AndroidPermission.WRITE_EXTERNAL_STORAGE,
+        () =>
+        {
             text.text = "WRITE_EXTERNAL_STORAGE is permitted NOW!!";
-        }, () => {
-            text.text = "WRITE_EXTERNAL_STORAGE id NOT permitted...";
+        },
+        () =>
+        {
+            Debug.Log("Not permitted");
+            text.text = "WRITE_EXTERNAL_STORAGE is NOT permitted...";
+        },
+        () =>
+        {
+            Debug.Log("NotPermitted2");
+            text.text = "WRITE_EXTERNAL_STORAGE is NOT permitted and checked never ask";
         });
     }
 }
