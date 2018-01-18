@@ -22,7 +22,7 @@ public class OverrideUnityActivity extends UnityPlayerActivity {
                     if(shouldShowRequestPermissionRationale(permissions[0])){
                         SendRequestResultToUnity("OnDeny");
                     } else {
-                        SendRequestResultToUnity("OnDenyWithNeverAskAgainOption");
+                        SendRequestResultToUnity("OnDenyAndNeverAskAgain");
                     }
                 }
                 break;

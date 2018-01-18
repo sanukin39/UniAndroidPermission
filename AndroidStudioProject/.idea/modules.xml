@@ -5,8 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/AndroidStudioProject.iml" filepath="$PROJECT_DIR$/AndroidStudioProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/UniAndroidPermission.iml" filepath="$PROJECT_DIR$/UniAndroidPermission.iml" />
       <module fileurl="file://$PROJECT_DIR$/androidpermission/androidpermission.iml" filepath="$PROJECT_DIR$/androidpermission/androidpermission.iml" />
-      <module fileurl="file://$PROJECT_DIR$/androidpermission/androidpermission.iml" filepath="$PROJECT_DIR$/androidpermission/androidpermission.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

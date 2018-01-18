@@ -11,20 +11,21 @@ public class SampleScript : MonoBehaviour {
             return;
         }
 
-        UniAndroidPermission.RequestPermission (AndroidPermission.WRITE_EXTERNAL_STORAGE,
-        () =>
-        {
-            text.text = "WRITE_EXTERNAL_STORAGE is permitted NOW!!";
-        },
-        () =>
-        {
-            Debug.Log("Not permitted");
-            text.text = "WRITE_EXTERNAL_STORAGE is NOT permitted...";
-        },
-        () =>
-        {
-            Debug.Log("NotPermitted2");
-            text.text = "WRITE_EXTERNAL_STORAGE is NOT permitted and checked never ask";
-        });
+        UniAndroidPermission.RequestPermission(AndroidPermission.WRITE_EXTERNAL_STORAGE, OnAllow, OnDeny, OnDenyAndNeverAskAgain);
+    }
+
+    private void OnAllow()
+    {
+        text.text = "WRITE_EXTERNAL_STORAGE is permitted NOW!!";
+    }
+
+    private void OnDeny()
+    {
+        text.text = "WRITE_EXTERNAL_STORAGE is NOT permitted...";
+    }
+
+    private void OnDenyAndNeverAskAgain()
+    {
+        text.text = "WRITE_EXTERNAL_STORAGE is NOT permitted and checked never ask again option";
     }
 }

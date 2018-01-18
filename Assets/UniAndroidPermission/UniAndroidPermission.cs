@@ -1,81 +1,89 @@
-﻿using UnityEngine;
-using System;
-using System.Collections;
+﻿using System;
+using UnityEngine;
 
-#if UNITY_ANDROID
-public class UniAndroidPermission : MonoBehaviour {
+public class UniAndroidPermission : MonoBehaviour
+{
+    const string PackageName = "net.sanukin.PermissionManager";
 
-    private static Action permitCallBack;
-    private static Action notPermitCallBack;
-    private static Action notPermitAndNverAskAgainCallbak;
-    const string PackageClassName = "net.sanukin.PermissionManager";
-    AndroidJavaClass permissionManager;
+    static Action onAllowCallback;
+    static Action onDenyCallback;
+    static Action onDenyAndNeverAskAgainCallback;
 
-    void Awake(){
-        DontDestroyOnLoad (gameObject);
-    }
-
-    public static bool IsPermitted(AndroidPermission permission){
-#if UNITY_EDITOR
-        Debug.LogWarning("UniAndroidPermission works only Androud Devices.");
-        return true;
-#elif UNITY_ANDROID
-        AndroidJavaClass permissionManager = new AndroidJavaClass (PackageClassName);
-        return permissionManager.CallStatic<bool> ("hasPermission", GetPermittionStr(permission));
-#endif
-        return true;
-    }
-
-    public static void RequestPermission(AndroidPermission permission, Action onPermit = null, Action notPermit = null, Action notPermitAndNeverAskAgain = null){
-#if UNITY_EDITOR
-        Debug.LogWarning("UniAndroidPermission works only Androud Devices.");
-        return;
-#elif UNITY_ANDROID
-        AndroidJavaClass permissionManager = new AndroidJavaClass (PackageClassName);
-        permissionManager.CallStatic("requestPermission", GetPermittionStr(permission));
-        permitCallBack = onPermit;
-        notPermitCallBack = notPermit;
-        notPermitAndNverAskAgainCallbak = notPermitAndNeverAskAgain;
-#endif
-    }
-
-    private static string GetPermittionStr(AndroidPermission permittion){
-        return "android.permission." + permittion.ToString ();
-    }
-
-    private void OnAllow(){
-        if (permitCallBack != null) {
-            permitCallBack ();
-        }
-        ResetCallBacks ();
-    }
-
-    private void OnDeny(){
-        if (notPermitCallBack != null) {
-            notPermitCallBack ();
-        }
-        ResetCallBacks ();
-    }
-
-    private void OnDenyWithNeverAskAgainOption()
+    void Awake()
     {
-        if (notPermitAndNverAskAgainCallbak != null)
-        {
-            notPermitAndNverAskAgainCallbak();
-        }
-        ResetCallBacks();
+        DontDestroyOnLoad(gameObject);
     }
 
-    private void ResetCallBacks(){
-        notPermitCallBack = null;
-        permitCallBack = null;
-        notPermitAndNverAskAgainCallbak = null;
+    public static bool IsPermitted(AndroidPermission permission)
+    {
+#if !UNITY_EDITOR && UNITY_ANDROID
+        using (var permissionManager = new AndroidJavaClass(PackageName))
+        {
+            return permissionManager.CallStatic<bool>("hasPermission", GetPermittionStr(permission));
+        }
+#else
+        return true;
+#endif
+    }
+
+    public static void RequestPermission(AndroidPermission permission, Action onAllow = null, Action onDeny = null, Action onDenyAndNeverAskAgain = null)
+    {
+#if !UNITY_EDITOR && UNITY_ANDROID
+        using (var permissionManager = new AndroidJavaClass(PackageName))
+        {
+            permissionManager.CallStatic("requestPermission", GetPermittionStr(permission));
+            onAllowCallback = onAllow;
+            onDenyCallback = onDeny;
+            onDenyAndNeverAskAgainCallback = onDenyAndNeverAskAgain;
+        }
+#else
+        Debug.LogWarning("UniAndroidPermission works only Androud Devices.");
+#endif
+    }
+
+    private static string GetPermittionStr(AndroidPermission permittion)
+    {
+        return "android.permission." + permittion.ToString();
+    }
+
+    private void OnAllow()
+    {
+        if (onAllowCallback != null)
+        {
+            onAllowCallback();
+        }
+        ResetAllCallBacks();
+    }
+
+    private void OnDeny()
+    {
+        if (onDenyCallback != null)
+        {
+            onDenyCallback();
+        }
+        ResetAllCallBacks();
+    }
+
+    private void OnDenyAndNeverAskAgain()
+    {
+        if (onDenyAndNeverAskAgainCallback != null)
+        {
+            onDenyAndNeverAskAgainCallback();
+        }
+        ResetAllCallBacks();
+    }
+
+    private void ResetAllCallBacks(){
+        onAllowCallback = null;
+        onDenyCallback = null;
+        onDenyAndNeverAskAgainCallback = null;
     }
 }
 
 // Protection level: dangerous permissions 2015/11/25
 // http://developer.android.com/intl/ja/reference/android/Manifest.permission.html
-public enum AndroidPermission{
+public enum AndroidPermission
+{
     ACCESS_COARSE_LOCATION,
     ACCESS_FINE_LOCATION,
     ADD_VOICEMAIL,
@@ -101,4 +109,3 @@ public enum AndroidPermission{
     WRITE_CONTACTS,
     WRITE_EXTERNAL_STORAGE
 }
-#endif
