@@ -1,7 +1,10 @@
 # UniAndroidPremission
 Plugin for use runtime permission at unity.
 It works only Android Devices
-![AndroidSS](https://github.com/sanukin39/UniAndroidPermission/blob/master/images/RuntimePermission.png)
+![runtimepermission](https://user-images.githubusercontent.com/6077255/35118396-f709f9c2-fcd4-11e7-9862-4d31c87f22a5.png)
+
+## Requirement
+Unity5 or higher
 
 ## Installation
 Use unitypackage at the [release page](https://github.com/sanukin39/UniAndroidPermission/releases)
@@ -28,7 +31,7 @@ Use unitypackage at the [release page](https://github.com/sanukin39/UniAndroidPe
 <meta-data android:name="unityplayer.SkipPermissionsDialog" android:value="true" />
 ```
 
-3 Add UniAndroidPermission.prefab at boot scene  ※ Don't rename object name!!
+3 Add UniAndroidPermission.prefab at boot scene   <b>※ Don't rename object name!!</b>
 
 
 4 Call method before function which need permissions
@@ -39,14 +42,28 @@ Check if permission permitted.
 UniAndroidPermission.IsPermitted (AndroidPermission.WRITE_EXTERNAL_STORAGE)
 ```
 
-Request Permission by runtime permission
+Request Permission
 
 ```cs
-UniAndroidPermission.RequestPremission (AndroidPermission.WRITE_EXTERNAL_STORAGE, () => {
-    // add permit action
-}, () => {
-    // add not permit action
-});
+public void RequestPermission()
+{
+    UniAndroidPermission.RequestPermission(AndroidPermission.WRITE_EXTERNAL_STORAGE, OnAllow, OnDeny, OnDenyAndNeverAskAgain);
+}
+
+private void OnAllow()
+{
+    // execute action that uses permitted function.
+}
+
+private void OnDeny()
+{
+    // back screen / show warnking window
+}
+
+private void OnDenyAndNeverAskAgain()
+{
+    // show warning window and open app permission setting page
+}
 ```
 
 ## Author
