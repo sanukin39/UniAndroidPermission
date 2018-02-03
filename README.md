@@ -1,4 +1,4 @@
-# UniAndroidPremission
+# UniAndroidPermission
 Plugin for use runtime permission at unity.
 It works only Android Devices
 ![runtimepermission](https://user-images.githubusercontent.com/6077255/35118396-f709f9c2-fcd4-11e7-9862-4d31c87f22a5.png)
