@@ -19,7 +19,7 @@ public class UniAndroidPermission : MonoBehaviour
 #if !UNITY_EDITOR && UNITY_ANDROID
         using (var permissionManager = new AndroidJavaClass(PackageName))
         {
-            return permissionManager.CallStatic<bool>("hasPermission", GetPermittionStr(permission));
+            return permissionManager.CallStatic<bool>("hasPermission", GetPermissionStr(permission));
         }
 #else
         return true;
@@ -31,19 +31,19 @@ public class UniAndroidPermission : MonoBehaviour
 #if !UNITY_EDITOR && UNITY_ANDROID
         using (var permissionManager = new AndroidJavaClass(PackageName))
         {
-            permissionManager.CallStatic("requestPermission", GetPermittionStr(permission));
+            permissionManager.CallStatic("requestPermission", GetPermissionStr(permission));
             onAllowCallback = onAllow;
             onDenyCallback = onDeny;
             onDenyAndNeverAskAgainCallback = onDenyAndNeverAskAgain;
         }
 #else
-        Debug.LogWarning("UniAndroidPermission works only Androud Devices.");
+        Debug.LogWarning("UniAndroidPermission works only on Android Devices.");
 #endif
     }
 
-    private static string GetPermittionStr(AndroidPermission permittion)
+    private static string GetPermissionStr(AndroidPermission permission)
     {
-        return "android.permission." + permittion.ToString();
+        return "android.permission." + permission.ToString();
     }
 
     private void OnAllow()
